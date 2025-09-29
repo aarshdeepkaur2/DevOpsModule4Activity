@@ -1,13 +1,15 @@
 from flask import Flask, request, render_template
 import socket
+
 app = Flask(__name__)
+
 def get_container_ip():
     try:
-      hostname = socket.gethostname()
-      ip_address = socket.gethostbyname(hostname)
-      return ip_address
+        hostname = socket.gethostname()
+        ip_address = socket.gethostbyname(hostname)
+        return ip_address
     except Exception:
-      return "Unknown"
+        return "Unknown"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -16,5 +18,6 @@ def index():
         ip_address = get_container_ip()
         greeting = f"Hello {name}, I am greeting you from a Python container with IP address {ip_address}"
         return render_template('index.html', greeting=greeting)
+    else:
+        # Handle GET request
         return render_template('index.html', greeting=None)
-
